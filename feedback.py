@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys
 import os
 import csv
@@ -133,7 +133,7 @@ def filter_stats(f, f_id, csv_data, writer):
 
 def gather_data(csv_file):
 	csv_data = []
-	with open(csv_file, 'rb') as csv_fd:
+	with open(csv_file, 'r') as csv_fd:
 		reader = csv.reader(csv_fd)
 		for line in reader:
 			if line[0].startswith("Obs.:") or line[0] == "":
@@ -141,10 +141,10 @@ def gather_data(csv_file):
 			else:
 				csv_data.append(line)
 	csv_result_file = csv_file.rsplit('.', 1)[0] + "-prelucrat.csv"
-	csv_result_fd = open(csv_result_file, 'wb')
+	csv_result_fd = open(csv_result_file, 'w')
 	writer = csv.writer(csv_result_fd, quoting=csv.QUOTE_ALL)
 
-	print "Generate results in " + sys.argv[1] + "/" + csv_result_file
+	print("Generate results in " + sys.argv[1] + "/" + csv_result_file)
 
 	writer.writerow(get_header(csv_data))
 
@@ -161,7 +161,7 @@ def gather_data(csv_file):
 	filter_stats(get_lab, 1, csv_data[1:], writer)
 	
 if len(sys.argv) != 2 or not os.path.isdir(sys.argv[1]):
-	print "Usage: " + sys.argv[0] + " DIR_DATA" 
+	print("Usage: " + sys.argv[0] + " DIR_DATA")
 	sys.exit(1)
 os.chdir(sys.argv[1])
 
