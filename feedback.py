@@ -110,10 +110,6 @@ def get_header(csv_data):
     return csv_data[0][2:-4]
 
 
-def empty_row(csv_data):
-    return [""] * len(get_header(csv_data))
-
-
 def get_stats(text, csv_data, f):
     # titular, asistent
     row = [text, len(csv_data)]
