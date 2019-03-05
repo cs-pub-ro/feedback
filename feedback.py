@@ -183,6 +183,7 @@ def gather_data(csv_file):
 
     writer.writerow(get_header(csv_data))
 
+    writer.writerow([""])
     row = get_stats("Minim", csv_data[1:], min_at_column)
     writer.writerow(row)
 
