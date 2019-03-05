@@ -41,6 +41,7 @@ def get_eval(s):
 
     return 1
 
+
 def get_h(s):
     # Students can choose between the following options:
     # We will consider the middle value.
@@ -55,10 +56,12 @@ def get_h(s):
 
     return 10
 
+
 def get_nota(s):
     if s == "sub 5":
         return 4
     return int(s)
+
 
 def get_load(s):
     if s == "DA":
@@ -68,11 +71,13 @@ def get_load(s):
 
     return 1
 
+
 def get_uniq_elem_at_column(csv_data, c):
     uniq = set([])
     for line in csv_data:
         uniq.add(Name(line[c]))
     return list(uniq)
+
 
 def average_at_column(csv_data, f, c):
     s = 0
@@ -82,12 +87,14 @@ def average_at_column(csv_data, f, c):
         num += 1.0
     return round(s/num, 2)
 
+
 def min_at_column(csv_data, f, c):
     minimum = f(csv_data[0][c])
     for line in csv_data:
         if f(line[c]) < minimum:
             minimum = f(line[c])
     return minimum
+
 
 def max_at_column(csv_data, f, c):
     maximum = f(csv_data[0][c])
@@ -96,13 +103,16 @@ def max_at_column(csv_data, f, c):
             maximum = f(line[c])
     return maximum
 
+
 def get_header(csv_data):
     csv_data[0][2] = "Categorie"
     csv_data[0][3] = "Count"
     return csv_data[0][2:-4]
 
+
 def empty_row(csv_data):
     return [""] * len(get_header(csv_data))
+
 
 def get_stats(text, csv_data, f):
     # titular, asistent
@@ -146,6 +156,7 @@ def get_stats(text, csv_data, f):
     row.append(f(csv_data, get_eval, 21))
 
     return row
+
 
 def filter_stats(f, f_id, csv_data, writer):
     p = f(csv_data, f_id)
@@ -194,6 +205,7 @@ def gather_data(csv_file):
     writer.writerow(["Asistenți"])
     total_a = filter_stats(get_uniq_elem_at_column, 3, csv_data[1:], writer)
     writer.writerow(["Total:", total_a])
+
 
 if len(sys.argv) != 2 or not os.path.isdir(sys.argv[1]):
     print("Usage: " + sys.argv[0] + " DIR_DATA")
