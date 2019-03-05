@@ -71,7 +71,7 @@ def get_load(s):
 def get_uniq_elem_at_column(csv_data, c):
     uniq = set([])
     for line in csv_data:
-        uniq.add(line[c])
+        uniq.add(Name(line[c]))
     return list(uniq)
 
 def average_at_column(csv_data, f, c):
@@ -149,11 +149,14 @@ def get_stats(text, csv_data, f):
 
 def filter_stats(f, f_id, csv_data, writer):
     p = f(csv_data, f_id)
+    total = 0
     for e in p:
         a = [row for row in csv_data if Name(row[f_id]) == e]
         row = get_stats(e, a, average_at_column)
+        total += int(row[1])
         writer.writerow(row)
 
+    return total
 
 
 def gather_data(csv_file):
@@ -182,8 +185,16 @@ def gather_data(csv_file):
     row = get_stats("Maxim", csv_data[1:], max_at_column)
     writer.writerow(row)
 
-    filter_stats(get_uniq_elem_at_column, 2, csv_data[1:], writer)
-    filter_stats(get_uniq_elem_at_column, 3, csv_data[1:], writer)
+    writer.writerow([""])
+    writer.writerow(["Titulari Curs"])
+    total_t = filter_stats(get_uniq_elem_at_column, 2, csv_data[1:], writer)
+    writer.writerow(["Total:", total_t])
+
+    writer.writerow([""])
+    writer.writerow(["Asistenți"])
+    total_a = filter_stats(get_uniq_elem_at_column, 3, csv_data[1:], writer)
+    writer.writerow(["Total:", total_a])
+
 if len(sys.argv) != 2 or not os.path.isdir(sys.argv[1]):
     print("Usage: " + sys.argv[0] + " DIR_DATA")
     sys.exit(1)
