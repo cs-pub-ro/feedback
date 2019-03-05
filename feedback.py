@@ -2,6 +2,31 @@
 import sys
 import os
 import csv
+import unicodedata
+
+
+class Name():
+    """Custom object for normalizing names and avoiding 'John Doe', 'john doe'
+    and 'Jöhn Döe' being considered distinct.
+
+    The names are converted to lowercase, no diacritics; manually fix them
+    after.
+
+    """
+    def __init__(self, name):
+        self.name = unicodedata.normalize("NFKD", name.lower()).encode("ASCII", "ignore")
+
+    def __repr__(self):
+        return repr(self.name)
+
+    def __str__(self):
+        return self.name.decode('utf-8')
+
+    def __eq__(self, other):
+        return self.name == other.name
+
+    def __hash__(self):
+        return hash(self.name)
 
 
 def get_eval(s):
@@ -131,7 +156,7 @@ def get_stats(text, csv_data, f):
 def filter_stats(f, f_id, csv_data, writer):
     p = f(csv_data)
     for e in p:
-        a = [row for row in csv_data if row[f_id] == e]
+        a = [row for row in csv_data if Name(row[f_id]) == e]
         row = get_stats(e, a, average_at_column)
         writer.writerow(row)
 
