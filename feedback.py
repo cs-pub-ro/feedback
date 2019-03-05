@@ -101,12 +101,6 @@ def get_header(csv_data):
     csv_data[0][3] = "Count"
     return csv_data[0][2:-4]
 
-def get_prof(csv_data):
-    return get_uniq_elem_at_column(csv_data, 0)
-
-def get_lab(csv_data):
-    return get_uniq_elem_at_column(csv_data, 1)
-
 def empty_row(csv_data):
     return [""] * len(get_header(csv_data))
 
@@ -154,7 +148,7 @@ def get_stats(text, csv_data, f):
     return row
 
 def filter_stats(f, f_id, csv_data, writer):
-    p = f(csv_data)
+    p = f(csv_data, f_id)
     for e in p:
         a = [row for row in csv_data if Name(row[f_id]) == e]
         row = get_stats(e, a, average_at_column)
@@ -188,9 +182,8 @@ def gather_data(csv_file):
     row = get_stats("Maxim", csv_data[1:], max_at_column)
     writer.writerow(row)
 
-    filter_stats(get_prof, 0, csv_data[1:], writer)
-    filter_stats(get_lab, 1, csv_data[1:], writer)
-
+    filter_stats(get_uniq_elem_at_column, 2, csv_data[1:], writer)
+    filter_stats(get_uniq_elem_at_column, 3, csv_data[1:], writer)
 if len(sys.argv) != 2 or not os.path.isdir(sys.argv[1]):
     print("Usage: " + sys.argv[0] + " DIR_DATA")
     sys.exit(1)
