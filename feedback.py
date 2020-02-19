@@ -83,6 +83,8 @@ def average_at_column(csv_data, f, c):
     s = 0
     num = 0
     for line in csv_data:
+        if line[c] == "":
+            continue
         s += f(line[c])
         num += 1.0
     return round(s/num, 2)
@@ -90,7 +92,10 @@ def average_at_column(csv_data, f, c):
 
 def min_at_column(csv_data, f, c):
     minimum = f(csv_data[0][c])
+    i = 1
     for line in csv_data:
+        if line[c] == "":
+            continue
         if f(line[c]) < minimum:
             minimum = f(line[c])
     return minimum
@@ -99,6 +104,8 @@ def min_at_column(csv_data, f, c):
 def max_at_column(csv_data, f, c):
     maximum = f(csv_data[0][c])
     for line in csv_data:
+        if line[c] == "":
+            continue
         if f(line[c]) > maximum:
             maximum = f(line[c])
     return maximum
