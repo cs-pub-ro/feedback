@@ -15,23 +15,29 @@ def get_eval(s):
         return 3
     if s == "2 - ...":
         return 2
+    if s == "1 - Deloc de acord":
+        return 1
+    if s == "0 - Nu pot aprecia - Nu se aplica":
+        return 0
 
-    return 1
+    return 0
 
 
 def get_h(s):
     # Students can choose between the following options:
     # We will consider the middle value.
     if s == "80% .. 100%":
-        return 90
+        return 5
     if s == "60% .. 80%":
-        return 70
+        return 4
     if s == "40% .. 60%":
-        return 50
+        return 3
     if s == "20% .. 40%":
-        return 30
+        return 2
+    if s == "0% .. 20%":
+        return 1
 
-    return 10
+    return 0
 
 
 def get_nota(s):
