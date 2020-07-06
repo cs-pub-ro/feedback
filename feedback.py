@@ -79,10 +79,16 @@ def average_at_column(csv_data, f, c):
 
 
 def min_at_column(csv_data, f, c):
-    minimum = f(csv_data[0][c])
-    i = 1
+    minimum = -1    # for the rare case when all grades are 0
+    for i in range(0, len(csv_data)):
+        if f(csv_data[i][c]) == 0:
+            continue
+        minimum = f(csv_data[i][c])
+        break
     for line in csv_data:
         if line[c] == "":
+            continue
+        if f(line[c]) == 0:
             continue
         if f(line[c]) < minimum:
             minimum = f(line[c])
