@@ -68,8 +68,13 @@ def average_at_column(csv_data, f, c):
     for line in csv_data:
         if line[c] == "":
             continue
-        s += f(line[c])
+        n = f(line[c])
+        if n == 0:
+            continue
+        s += n
         num += 1.0
+    if num == 0:
+        return 0
     return round(s/num, 2)
 
 
