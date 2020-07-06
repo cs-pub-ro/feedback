@@ -1,4 +1,4 @@
-#/usr/bin/python3
+#!/usr/bin/env python3
 # (c) Mihai Chiroiu 18 May 2020
 # sudo pip3 install requests
 # https://docs.moodle.org/dev/Web_service_API_functions
