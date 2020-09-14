@@ -174,20 +174,16 @@ def filter_stats(f, f_id, csv_data, writer):
     return total
 
 
-def gather_data(csv_file):
+def gather_data(infd, outfd):
     csv_data = []
-    with open(csv_file, 'r') as csv_fd:
-        reader = csv.reader(csv_fd)
-        for line in reader:
-            if line[0].startswith("Obs.:") or line[0] == "":
-                break
-            else:
-                csv_data.append(line)
-    csv_result_file = csv_file.rsplit('.', 1)[0] + "-prelucrat.csv"
-    csv_result_fd = open(csv_result_file, 'w')
-    writer = csv.writer(csv_result_fd, quoting=csv.QUOTE_ALL)
+    reader = csv.reader(infd)
+    for line in reader:
+        if line[0].startswith("Obs.:") or line[0] == "":
+            break
+        else:
+            csv_data.append(line)
 
-    print("Generate results in " + sys.argv[1] + "/" + csv_result_file)
+    writer = csv.writer(outfd, quoting=csv.QUOTE_ALL)
 
     writer.writerow(get_header(csv_data))
 
@@ -211,13 +207,8 @@ def gather_data(csv_file):
     total_a = filter_stats(get_uniq_elem_at_column, 3, csv_data[1:], writer)
     writer.writerow(["Total:", total_a])
 
+def main():
+    gather_data(sys.stdin, sys.stdout)
 
-if len(sys.argv) != 2 or not os.path.isdir(sys.argv[1]):
-    print("Usage: " + sys.argv[0] + " DIR_DATA")
-    sys.exit(1)
-os.chdir(sys.argv[1])
-
-datasets = [f for f in os.listdir(".") if os.path.isfile(f) and f.endswith(".csv")]
-
-for csv_file in datasets:
-    gather_data(csv_file)
+if __name__ == "__main__":
+    sys.exit(main())
