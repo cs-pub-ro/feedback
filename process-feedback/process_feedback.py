@@ -81,6 +81,8 @@ def average_at_column(csv_data, f, c):
 def min_at_column(csv_data, f, c):
     minimum = -1    # for the rare case when all grades are 0
     for i in range(0, len(csv_data)):
+        if csv_data[i][c] == "":
+            continue
         if f(csv_data[i][c]) == 0:
             continue
         minimum = f(csv_data[i][c])
@@ -96,7 +98,12 @@ def min_at_column(csv_data, f, c):
 
 
 def max_at_column(csv_data, f, c):
-    maximum = f(csv_data[0][c])
+    maximum = 5
+    for i in range(0, len(csv_data)):
+        if csv_data[i][c] == "":
+            continue
+        maximum = f(csv_data[i][c])
+        break
     for line in csv_data:
         if line[c] == "":
             continue
