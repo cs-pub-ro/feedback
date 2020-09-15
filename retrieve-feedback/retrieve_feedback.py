@@ -96,18 +96,25 @@ def get_user_feedback_ids():
             }
     # Create a JSON of all courses id for the user.
     i = 0
+    NUM_COURSES_PER_QUERY = 50
+    feedback_ids = {}
     for course_id in course_ids:
         course_id_json = {"courseids["+str(i)+"]":course_id}
         i+=1
         payload.update(course_id_json)
 
-    r = requests.post(rest_url, params=payload)
-    res_json = r.json()
-
-    # Create the list of feedback IDs for all courses.
-    feedback_ids = {}
-    for feedback in res_json['feedbacks']:
-        feedback_ids[feedback['id']] = course_ids[feedback['course']]
+        if i == NUM_COURSES_PER_QUERY:
+            r = requests.post(rest_url, params=payload)
+            res_json = r.json()
+            # Create the list of feedback IDs for courses.
+            for feedback in res_json['feedbacks']:
+                # Ignore additional feedbacks for a course.
+                if course_ids[feedback['course']] in feedback_ids.values():
+                    print("Already exists feedback for course {} ({})".format(feedback['course'], course_ids[feedback['course']]))
+                    continue
+                feedback_ids[feedback['id']] = course_ids[feedback['course']]
+            # Reset counter.
+            i = 0
     return feedback_ids
 
 def get_user_feedback():
