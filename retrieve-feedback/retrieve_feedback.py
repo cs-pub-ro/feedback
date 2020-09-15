@@ -66,11 +66,28 @@ def get_user_courses_ids():
         course_ids[course['id']] = course['fullname']
     return course_ids
 
+def get_courses_ids():
+    global moodle_token
+    global userid
+
+    payload = {
+            "wstoken":moodle_token,
+            "moodlewsrestformat":"json",
+            "wsfunction":"core_course_get_courses"
+            }
+    r = requests.post(rest_url, params=payload)
+    res_json = r.json()
+    course_ids = {}
+
+    for course in res_json:
+        course_ids[course['id']] = course['shortname']
+    return course_ids
+
 def get_user_feedback_ids():
     global moodle_token
     global userid
 
-    course_ids = get_user_courses_ids()
+    course_ids = get_courses_ids()
 
     payload = {
             "wstoken":moodle_token,
