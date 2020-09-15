@@ -58,7 +58,7 @@ def get_userid():
     res_json = r.json()
     userid = res_json['userid']
 
-def get_user_courses_ids():
+def get_user_courses():
     global moodle_token
     global userid
 
@@ -69,14 +69,9 @@ def get_user_courses_ids():
             "userid":userid
             }
     r = requests.post(rest_url, params=payload)
-    res_json = r.json()
-    course_ids = {}
+    return r.json()
 
-    for course in res_json:
-        course_ids[course['id']] = course['fullname']
-    return course_ids
-
-def get_courses_ids():
+def get_courses():
     global moodle_token
     global userid
 
@@ -86,10 +81,19 @@ def get_courses_ids():
             "wsfunction":"core_course_get_courses"
             }
     r = requests.post(rest_url, params=payload)
-    res_json = r.json()
+    return r.json()
+
+def get_user_courses_ids():
     course_ids = {}
 
-    for course in res_json:
+    for course in get_user_courses():
+        course_ids[course['id']] = course['shortname']
+    return course_ids
+
+def get_courses_ids():
+    course_ids = {}
+
+    for course in get_courses():
         course_ids[course['id']] = course['shortname']
     return course_ids
 
