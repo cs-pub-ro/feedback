@@ -1,0 +1,49 @@
+#!/bin/bash
+
+if test $# -ne 2; then
+    echo "Usage: $0 <input-folder> <output-separated-folder>" 1>&2
+    exit 1
+fi
+
+in="$1"
+out="$2"
+cti="$2"/cti/raw
+is="$2"/is/raw
+
+if test ! -d "$in"; then
+    echo "Error: Argument $in (input) is not a folder." 1>&2
+    exit 1
+fi
+
+if test ! -d "$out"; then
+    echo "Error: Argument $out (output) is not a folder." 1>&2
+    exit 1
+fi
+
+if test ! -d "$cti"; then
+    echo "Error: $cti folder does not exist. Please create it beforehand." 1>&2
+    exit 1
+fi
+
+if test ! -d "$is"; then
+    echo "Error: $is subfolder does not exist. Please create it beforehand." 1>&2
+    exit 1
+fi
+
+for init in "L-A1-S1" "L-A1-S2" "L-A2-S1" "L-A2-S2" "L-A3-S1" "L-A3-S2" "L-A4-S1" "L-A4-S2" "M-A1-S1" "M-A1-S2" "M-A2-S1" "M-A2-S2"; do
+    for series in "CA" "CB" "CC" "CD" "C1" "C2" "C3" "C4" "Tehnologia informaţiei" "CTI" "AAC" "ABD" "eGuv" "G" "GMRV" "IA" "ISI" "MTI" "SAS" "SCPD" "SPF" "SRIC" "SSA" "EGOV"; do
+        num=$(ls "$in"/"$init"-*-"$series".* 2> /dev/null | wc -l)
+        if test $num -lt 1; then
+            continue
+        fi
+        ln -f "$in"/"$init"-*-"$series".* "$cti"
+    done
+done
+
+IFS='\n'
+for f in "$in"/*; do
+    b="$(basename "$f")"
+    if test ! -f "$cti"/"$b"; then
+        ln -f "$f" "$is"
+    fi
+done
