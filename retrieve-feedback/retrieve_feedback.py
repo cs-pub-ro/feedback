@@ -5,25 +5,35 @@
 
 import json
 import requests
-import getpass
 import sys
+import configparser
 
-username = input('Utilizator Moodle: ')
-try:
-    password = getpass.getpass(prompt='Parola Moodle: ')
-except Exception as error:
-    print('ERROR', error)
-    exit(0)
+CONFIG_FILE = "feedback.conf"
 
-base_url = 'https://acs.curs.pub.ro/2018/'
-rest_url = base_url + '/webservice/rest/server.php'
-moodle_token = ''
-userid = ''
+username = ""
+base_url = ""
+rest_url = ""
+moodle_token = ""
+userid = ""
+
+def parse_config(config_file):
+    global username
+    global password
+    global base_url
+    global rest_url
+
+    config = configparser.ConfigParser()
+    config.read(config_file)
+
+    base_url = config['connect']['url']
+    rest_url = base_url + "/webservice/rest/server.php"
+    username = config['connect']['username']
+    password = config['connect']['password']
 
 def get_auth_token():
     global moodle_token
 
-    token_url = base_url + 'login/token.php'
+    token_url = base_url + '/login/token.php'
     payload = {
             "username":username,
             "password":password,
@@ -139,6 +149,7 @@ def get_user_feedback():
             json.dump(res_json, outfile)
 
 def main():
+    parse_config(CONFIG_FILE)
     get_auth_token()
     get_userid()
     get_user_feedback()
