@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if test $# -ne 2; then
+    echo "Usage: $0 <csv-unprocessed-folder> <csv-processed-folder>" 1>&2
+    exit 1
+fi
+
+in="$1"
+out="$2"
+
+for i in "$in"/*.csv; do
+    echo "Processing $i ..."
+    ./process_feedback.py < "$i" > "$out"/"$(basename "$i")"
+done
