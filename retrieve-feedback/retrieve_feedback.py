@@ -110,7 +110,7 @@ def get_user_feedback():
 
         r = requests.post(rest_url, params=payload)
         res_json = r.json()
-        with open(feedback_ids[feedback_id]+".json", 'w') as outfile:
+        with open(feedback_ids[feedback_id].replace("/","|")+".json", 'w') as outfile:
             json.dump(res_json, outfile)
 
 def main():
