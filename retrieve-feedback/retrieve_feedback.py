@@ -8,6 +8,7 @@ import requests
 import sys
 import configparser
 
+
 CONFIG_FILE = "feedback.conf"
 
 username = ""
@@ -15,6 +16,7 @@ base_url = ""
 rest_url = ""
 moodle_token = ""
 userid = ""
+
 
 def parse_config(config_file):
     global username
@@ -30,10 +32,11 @@ def parse_config(config_file):
     username = config['connect']['username']
     password = config['connect']['password']
 
+
 def get_auth_token():
     global moodle_token
 
-    token_url = base_url + '/login/token.php'
+    token_url = base_url + "/login/token.php"
     payload = {
             "username":username,
             "password":password,
@@ -44,6 +47,7 @@ def get_auth_token():
     r = requests.post(token_url, params=payload)
     res_json = r.json()
     moodle_token = res_json['token']
+
 
 def get_userid():
     global moodle_token
@@ -58,6 +62,7 @@ def get_userid():
     res_json = r.json()
     userid = res_json['userid']
 
+
 def get_user_courses():
     global moodle_token
     global userid
@@ -71,6 +76,7 @@ def get_user_courses():
     r = requests.post(rest_url, params=payload)
     return r.json()
 
+
 def get_courses():
     global moodle_token
     global userid
@@ -83,6 +89,7 @@ def get_courses():
     r = requests.post(rest_url, params=payload)
     return r.json()
 
+
 def get_user_courses_ids():
     course_ids = {}
 
@@ -90,12 +97,14 @@ def get_user_courses_ids():
         course_ids[course['id']] = course['shortname']
     return course_ids
 
+
 def get_courses_ids():
     course_ids = {}
 
     for course in get_courses():
         course_ids[course['id']] = course['shortname']
     return course_ids
+
 
 def get_user_feedback_ids():
     global moodle_token
@@ -131,6 +140,7 @@ def get_user_feedback_ids():
             i = 0
     return feedback_ids
 
+
 def get_user_feedback():
     global moodle_token
     global userid
@@ -152,11 +162,13 @@ def get_user_feedback():
         with open(feedback_ids[feedback_id].replace("/","|")+".json", 'w') as outfile:
             json.dump(res_json, outfile)
 
+
 def main():
     parse_config(CONFIG_FILE)
     get_auth_token()
     get_userid()
     get_user_feedback()
+
 
 if __name__ == "__main__":
     sys.exit(main())
