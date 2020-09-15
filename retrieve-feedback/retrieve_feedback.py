@@ -6,6 +6,7 @@
 import json
 import requests
 import getpass
+import sys
 
 username = input('Utilizator Moodle: ')
 try:
@@ -119,4 +120,4 @@ def main():
     get_user_feedback()
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
