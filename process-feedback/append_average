@@ -1,0 +1,52 @@
+#!/bin/bash
+
+if test $# -ne 1; then
+    echo "Usage: $0 <csv-input-folder>" 1>&2
+    exit 1
+fi
+
+in="$1"
+
+if test ! -d "$in"; then
+    echo "Error: Folder $in does not exist or is not a folder." 1>&2
+    exit 1
+fi
+
+IFS='\n'
+for i in "$in"/raw/*.csv; do
+    base=$(basename "$i" .csv)
+    b=$(echo "$base" | sed "s/^\([LM]-[^-]\+-[^-]\+\)-.*$/\1/g")
+    course=$(echo "$base" | sed "s/^[LM]-[^-]\+-[^-]\+-\([^-\.]\+\).*$/\1/g")
+    series=$(echo "$base" | sed "s/^.*-\([^-]\+\)$/\1/g")
+    #echo "base: $b, course: $course, series: $series"
+
+    result="$in"/average/"$base".csv
+    echo "Writing to $result ..."
+    cp "$i" "$result"
+
+    echo '""' >> "$result"
+
+    # Looking for common file.
+    common="$in"/common/"$b"-"$course"-all.csv
+    echo "Looking for $common ..."
+    if test -f "$common"; then
+        rest=$(sed -n '/Mediu/ { s/^[^,]\+,[^,]\+,\(.*\)$/\1/g ; p }' "$common")
+        num_feedbacks=$(grep 'Mediu' "$common" | cut -d ',' -f 2 | tr -d '"')
+        num_courses=$(ls "$in"/raw/"$b"-"$course"-*.csv | wc -l)
+        average=$(("$num_feedbacks" / "$num_courses"))
+        #echo "num_feedbacks: $num_feedbacks, num_courses: $num_courses, average: $average"
+        echo "\"Medie cursuri "$course" de la toate seriile\",\"$average\",$rest" >> "$result"
+    fi
+
+    # Looking for per-series files
+    per_series="$in"/per-series/"$b"-"$series".csv
+    echo "Looking for $per_series ..."
+    if test -f "$per_series"; then
+        rest=$(sed -n '/Mediu/ { s/^[^,]\+,[^,]\+,\(.*\)$/\1/g ; p }' "$per_series")
+        num_feedbacks=$(grep 'Mediu' "$per_series" | cut -d ',' -f 2 | tr -d '"')
+        num_courses=$(ls "$in"/raw/"$b"-*-"$series".csv | wc -l)
+        average=$(("$num_feedbacks" / "$num_courses"))
+        #echo "num_feedbacks: $num_feedbacks, num_courses: $num_courses, average: $average"
+        echo "\"Medie cursuri de la seria $series\",\"$average\",$rest" >> "$result"
+    fi
+done
