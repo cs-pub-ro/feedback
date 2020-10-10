@@ -1,0 +1,37 @@
+#!/bin/bash
+
+if test $# -ne 1; then
+    echo "Usage: $0 <top-folder>" 1>&2
+    exit 1
+fi
+
+top="$1"
+
+if test ! -d "$top"; then
+    echo "Error: Folder $top does not exist or is not a folder." 1>&2
+    exit 1
+fi
+
+./extract_average "$top"/processed/entire/ > "$top"/summary/entire.csv
+./extract_average "$top"/processed/per-semester/ > "$top"/summary/per-semester.csv
+./extract_average "$top"/processed/per-series/ > "$top"/summary/per-series.csv
+./extract_average "$top"/processed/common/ > "$top"/summary/common.csv
+./extract_average "$top"/processed/raw/ > "$top"/summary/raw.csv
+sed -n '/^"Titulari Curs"/,/^"Total:"/p' "$top"/processed/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/prof.csv
+sed -n '/^"Asisten/,/^"Total:"/p' "$top"/processed/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/asist.csv
+
+./extract_average "$top"/sep-processed/cti/entire/ > "$top"/summary/cti/entire.csv
+./extract_average "$top"/sep-processed/cti/per-semester/ > "$top"/summary/cti/per-semester.csv
+./extract_average "$top"/sep-processed/cti/per-series/ > "$top"/summary/cti/per-series.csv
+./extract_average "$top"/sep-processed/cti/common/ > "$top"/summary/cti/common.csv
+./extract_average "$top"/sep-processed/cti/raw/ > "$top"/summary/cti/raw.csv
+sed -n '/^"Titulari Curs"/,/^"Total:"/p' "$top"/sep-processed/cti/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/cti/prof.csv
+sed -n '/^"Asisten/,/^"Total:"/p' "$top"/sep-processed/cti/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/cti/asist.csv
+
+./extract_average "$top"/sep-processed/is/entire/ > "$top"/summary/is/entire.csv
+./extract_average "$top"/sep-processed/is/per-semester/ > "$top"/summary/is/per-semester.csv
+./extract_average "$top"/sep-processed/is/per-series/ > "$top"/summary/is/per-series.csv
+./extract_average "$top"/sep-processed/is/common/ > "$top"/summary/is/common.csv
+./extract_average "$top"/sep-processed/is/raw/ > "$top"/summary/is/raw.csv
+sed -n '/^"Titulari Curs"/,/^"Total:"/p' "$top"/sep-processed/is/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/is/prof.csv
+sed -n '/^"Asisten/,/^"Total:"/p' "$top"/sep-processed/is/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/is/asist.csv
