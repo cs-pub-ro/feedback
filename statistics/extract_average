@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if test $# -ne 1; then
+    echo "Usage: $0 <csv-processed-folder>" 1>&2
+    exit 1
+fi
+
+in="$1"
+
+grep Mediu "$in"/*.csv | sed 's/^.*\/\(.*\)\.csv:"Mediu"/"\1"/g'
