@@ -75,3 +75,7 @@ fi
 ./analyze_asist_zones.py "$top"/analysis/select_asist.csv > "$top"/analysis/zone_asist.csv
 ./analyze_asist_zones.py "$top"/analysis/cti/select_asist.csv > "$top"/analysis/cti/zone_asist.csv
 ./analyze_asist_zones.py "$top"/analysis/is/select_asist.csv > "$top"/analysis/is/zone_asist.csv
+
+./select_feedback_course_mapping.py "$top"/mapping/num_feedbacks/all.csv > "$top"/analysis/full_courses.csv
+./select_feedback_course_mapping.py "$top"/mapping/cti/num_feedbacks/all.csv > "$top"/analysis/cti/full_courses.csv
+./select_feedback_course_mapping.py "$top"/mapping/is/num_feedbacks/all.csv > "$top"/analysis/is/full_courses.csv
