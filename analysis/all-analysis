@@ -79,3 +79,7 @@ fi
 ./select_feedback_course_mapping.py "$top"/mapping/num_feedbacks/all.csv > "$top"/analysis/full_courses.csv
 ./select_feedback_course_mapping.py "$top"/mapping/cti/num_feedbacks/all.csv > "$top"/analysis/cti/full_courses.csv
 ./select_feedback_course_mapping.py "$top"/mapping/is/num_feedbacks/all.csv > "$top"/analysis/is/full_courses.csv
+
+./numbers_courses_group.py "$top"/analysis/full_courses.csv > "$top"/analysis/num_courses_group.csv
+./numbers_courses_group.py "$top"/analysis/cti/full_courses.csv > "$top"/analysis/cti/num_courses_group.csv
+./numbers_courses_group.py "$top"/analysis/is/full_courses.csv > "$top"/analysis/is/num_courses_group.csv
