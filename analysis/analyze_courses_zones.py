@@ -7,10 +7,6 @@ import os
 import re
 
 
-PERC_LIMIT = 10
-NUM_LIMIT = 3
-
-
 def stats(courses):
     zones = {
             "4-5": {
@@ -69,14 +65,12 @@ def main():
     # Skip header.
     h = next(reader)
     for row in reader:
-        if float(row[2]) < PERC_LIMIT or int(row[1]) < NUM_LIMIT:
-            continue
         courses[row[0]] = {
                 "name": row[0],
-                "nfeedback": int(row[1]),
-                "perc": float(row[2]),
-                "users": int(row[3]),
-                "course_grade": float(row[4]),
+                "nfeedback": int(row[2]),
+                "perc": float(row[3]),
+                "users": int(row[4]),
+                "course_grade": float(row[5]),
                 }
     csvfile.close()
 

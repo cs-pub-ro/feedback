@@ -26,7 +26,7 @@ def main():
                 }
     csvfile.close()
 
-    print("\"prof\",\"num_cursuri\",\"num_feedback\",\"proc_feedback\",\"num_utilizatori\",\"evaluare_curs\",\"evaluare_prof\"")
+    print("\"asist\",\"num_feedback\",\"evaluare_curs\",\"evaluare_prof\"")
     for k in sorted(asist, key=lambda x: asist[x]["asist_grade"], reverse=True):
         if asist[k]["nfeedback"] < NUM_LIMIT:
             continue

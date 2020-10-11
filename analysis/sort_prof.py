@@ -9,7 +9,7 @@ import re
 
 def main():
     if len(sys.argv) != 3:
-        sys.stderr.write("Usage: {} <prof-raw-feedback-csv-file> <prof-feedback-percent>\n".format(sys.argv[0]))
+        sys.stderr.write("Usage: {} <prof-raw-feedback-csv-file> <prof-feedback-mapping>\n".format(sys.argv[0]))
         sys.exit(1)
 
     profs = {}

@@ -12,13 +12,13 @@ if test ! -d "$top"; then
     exit 1
 fi
 
-./analyze_prof.py "$top"/summary/prof.csv "$top"/mapping/num_feedbacks/prof.csv > "$top"/analysis/all_prof.csv
-./analyze_prof.py "$top"/summary/prof.csv "$top"/mapping/cti/num_feedbacks/prof.csv > "$top"/analysis/cti/all_prof.csv
-./analyze_prof.py "$top"/summary/prof.csv "$top"/mapping/is/num_feedbacks/prof.csv > "$top"/analysis/is/all_prof.csv
+./sort_prof.py "$top"/summary/prof.csv "$top"/mapping/num_feedbacks/prof.csv > "$top"/analysis/all_prof.csv
+./sort_prof.py "$top"/summary/prof.csv "$top"/mapping/cti/num_feedbacks/prof.csv > "$top"/analysis/cti/all_prof.csv
+./sort_prof.py "$top"/summary/prof.csv "$top"/mapping/is/num_feedbacks/prof.csv > "$top"/analysis/is/all_prof.csv
 
-./analyze_asist.py "$top"/summary/asist.csv > "$top"/analysis/all_asist.csv
-./analyze_asist.py "$top"/summary/cti/asist.csv > "$top"/analysis/cti/all_asist.csv
-./analyze_asist.py "$top"/summary/is/asist.csv > "$top"/analysis/is/all_asist.csv
+./sort_asist.py "$top"/summary/asist.csv > "$top"/analysis/all_asist.csv
+./sort_asist.py "$top"/summary/cti/asist.csv > "$top"/analysis/cti/all_asist.csv
+./sort_asist.py "$top"/summary/is/asist.csv > "$top"/analysis/is/all_asist.csv
 
 ./select_prof.py "$top"/analysis/all_prof.csv > "$top"/analysis/select_prof.csv
 ./select_prof.py "$top"/analysis/cti/all_prof.csv > "$top"/analysis/cti/select_prof.csv
@@ -28,29 +28,29 @@ fi
 ./select_asist.py "$top"/analysis/cti/all_asist.csv > "$top"/analysis/cti/select_asist.csv
 ./select_asist.py "$top"/analysis/is/all_asist.csv > "$top"/analysis/is/select_asist.csv
 
-./select_prof_perc_feedback.py "$top"/analysis/all_prof.csv > "$top"/analysis/select_prof_perc_feedback.csv
-./select_prof_perc_feedback.py "$top"/analysis/cti/all_prof.csv > "$top"/analysis/cti/select_prof_perc_feedback.csv
-./select_prof_perc_feedback.py "$top"/analysis/is/all_prof.csv > "$top"/analysis/is/select_prof_perc_feedback.csv
+./select_prof_perc_feedback.py "$top"/analysis/select_prof.csv > "$top"/analysis/select_prof_perc_feedback.csv
+./select_prof_perc_feedback.py "$top"/analysis/cti/select_prof.csv > "$top"/analysis/cti/select_prof_perc_feedback.csv
+./select_prof_perc_feedback.py "$top"/analysis/is/select_prof.csv > "$top"/analysis/is/select_prof_perc_feedback.csv
 
-./analyze_courses.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/all_courses.csv
-./analyze_courses.py "$top"/mapping/cti/num_feedbacks/raw.csv > "$top"/analysis/cti/all_courses.csv
-./analyze_courses.py "$top"/mapping/is/num_feedbacks/raw.csv > "$top"/analysis/is/all_courses.csv
+./sort_courses.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/all_courses.csv
+./sort_courses.py "$top"/mapping/cti/num_feedbacks/raw.csv > "$top"/analysis/cti/all_courses.csv
+./sort_courses.py "$top"/mapping/is/num_feedbacks/raw.csv > "$top"/analysis/is/all_courses.csv
 
 ./select_courses.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/select_courses.csv
 ./select_courses.py "$top"/mapping/cti/num_feedbacks/raw.csv > "$top"/analysis/cti/select_courses.csv
 ./select_courses.py "$top"/mapping/is/num_feedbacks/raw.csv > "$top"/analysis/is/select_courses.csv
 
-./select_courses_group.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/select_courses_group.csv
-./select_courses_group.py "$top"/mapping/cti/num_feedbacks/raw.csv > "$top"/analysis/cti/select_courses_group.csv
-./select_courses_group.py "$top"/mapping/is/num_feedbacks/raw.csv > "$top"/analysis/is/select_courses_group.csv
+./select_courses_group.py "$top"/analysis/select_courses.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/select_courses_group.csv
+./select_courses_group.py "$top"/analysis/cti/select_courses.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/cti/select_courses_group.csv
+./select_courses_group.py "$top"/analysis/is/select_courses.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/is/select_courses_group.csv
 
-./select_courses_series.py "$top"/mapping/num_feedbacks/raw.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/select_courses_series.csv
-./select_courses_series.py "$top"/mapping/cti/num_feedbacks/raw.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/cti/select_courses_series.csv
-./select_courses_series.py "$top"/mapping/is/num_feedbacks/raw.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/is/select_courses_series.csv
+./select_courses_series.py "$top"/analysis/select_courses.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/select_courses_series.csv
+./select_courses_series.py "$top"/analysis/cti/select_courses.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/cti/select_courses_series.csv
+./select_courses_series.py "$top"/analysis/is/select_courses.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/is/select_courses_series.csv
 
-./select_courses_perc_feedback.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/select_courses_perc_feedback.csv
-./select_courses_perc_feedback.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/cti/select_courses_perc_feedback.csv
-./select_courses_perc_feedback.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/is/select_courses_perc_feedback.csv
+./select_courses_perc_feedback.py "$top"/analysis/select_courses.csv > "$top"/analysis/select_courses_perc_feedback.csv
+./select_courses_perc_feedback.py "$top"/analysis/cti/select_courses.csv > "$top"/analysis/cti/select_courses_perc_feedback.csv
+./select_courses_perc_feedback.py "$top"/analysis/is/select_courses.csv > "$top"/analysis/is/select_courses_perc_feedback.csv
 
 ./analyze_courses_semester.py "$top"/analysis/select_courses.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/comp_courses_semester.csv
 ./analyze_courses_semester.py "$top"/analysis/cti/select_courses.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/cti/comp_courses_semester.csv

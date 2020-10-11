@@ -7,10 +7,6 @@ import os
 import re
 
 
-PERC_LIMIT = 10
-NUM_LIMIT = 3
-
-
 def semester_stats(courses):
     courses_per_semester = {}
     for c in courses.keys():
@@ -43,15 +39,15 @@ def semester_stats(courses):
 
 def main():
     if len(sys.argv) != 2:
-        sys.stderr.write("Usage: {} <raw-mapping-course-feedback-csv-file>\n".format(sys.argv[0]))
+        sys.stderr.write("Usage: {} <mapping-course-feedback-csv-file>\n".format(sys.argv[0]))
         sys.exit(1)
 
     courses = {}
     csvfile = open(sys.argv[1], "rt")
     reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    # Skip header.
+    h = next(reader)
     for row in reader:
-        if float(row[3]) < PERC_LIMIT or int(row[2]) < NUM_LIMIT:
-            continue
         courses[row[0]] = {
                 "name": row[0],
                 "nfeedback": int(row[2]),

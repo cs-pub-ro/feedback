@@ -6,8 +6,6 @@ import glob
 import os
 import re
 
-PERC_LIMIT = 7.0
-NUM_LIMIT = 15
 
 def main():
     if len(sys.argv) != 2:
@@ -30,11 +28,9 @@ def main():
                 }
     csvfile.close()
 
-    print("\"prof\",\"num_cursuri\",\"num_feedback\",\"proc_feedback\"")
+    print("\"prof\",\"num_cursuri\",\"num_feedback\",\"proc_feedback\",\"num_utilizatori\",\"evaluare_curs\",\"evaluare_prof\"")
     for k in sorted(profs, key=lambda x: profs[x]["perc"], reverse=True):
-        if profs[k]["perc"] < PERC_LIMIT or profs[k]["nfeedback"] < NUM_LIMIT:
-            continue
-        print("\"{}\",\"{:d}\",\"{:d}\",\"{:4.2f}\"".format(k, profs[k]["ncourses"], profs[k]["nfeedback"], profs[k]["perc"]))
+        print("\"{}\",\"{:d}\",\"{:d}\",\"{:4.2f}\",\"{:d}\",\"{:3.2f}\",\"{:3.2f}\"".format(k, profs[k]["ncourses"], profs[k]["nfeedback"], profs[k]["perc"], profs[k]["users"], profs[k]["course_grade"], profs[k]["prof_grade"]))
 
 
 if __name__ == "__main__":
