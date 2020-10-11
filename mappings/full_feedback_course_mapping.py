@@ -24,7 +24,7 @@ def main():
         num = int(row[1])
         val = float(row[2])
         if not course in num_users.keys():
-            sys.stderr.write("Error: Course absent.\n")
+            sys.stderr.write("Error: Course {} absent.\n".format(course))
             sys.exit(1)
         res[course] = {
                 "num": num,

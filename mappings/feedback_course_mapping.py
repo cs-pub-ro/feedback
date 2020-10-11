@@ -6,7 +6,7 @@ import csv
 
 def main():
     if len(sys.argv) != 4:
-        sys.stderr.write("Usage: {} <raw-feedback-csv-file> <num-user-csv-file> <prof0courses-csv-file>\n".format(sys.argv[0]))
+        sys.stderr.write("Usage: {} <raw-feedback-csv-file> <num-user-csv-file> <prof-courses-csv-file>\n".format(sys.argv[0]))
         sys.exit(1)
 
     num_users = {}
@@ -31,7 +31,7 @@ def main():
         num = int(row[1])
         val = float(row[2])
         if not course in num_users.keys():
-            sys.stderr.write("Error: Course absent.\n")
+            sys.stderr.write("Error: Course {} absent.\n".format(course))
             sys.exit(1)
         res[course] = {
                 "prof": prof_courses[course],
