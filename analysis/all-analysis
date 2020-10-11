@@ -40,6 +40,14 @@ fi
 ./select_courses.py "$top"/mapping/cti/num_feedbacks/raw.csv > "$top"/analysis/cti/select_courses.csv
 ./select_courses.py "$top"/mapping/is/num_feedbacks/raw.csv > "$top"/analysis/is/select_courses.csv
 
+./select_courses_group.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/select_courses_group.csv
+./select_courses_group.py "$top"/mapping/cti/num_feedbacks/raw.csv > "$top"/analysis/cti/select_courses_group.csv
+./select_courses_group.py "$top"/mapping/is/num_feedbacks/raw.csv > "$top"/analysis/is/select_courses_group.csv
+
+./select_courses_series.py "$top"/mapping/num_feedbacks/raw.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/select_courses_series.csv
+./select_courses_series.py "$top"/mapping/cti/num_feedbacks/raw.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/cti/select_courses_series.csv
+./select_courses_series.py "$top"/mapping/is/num_feedbacks/raw.csv | (read -r ; echo "$REPLY" ; sort) > "$top"/analysis/is/select_courses_series.csv
+
 ./select_courses_perc_feedback.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/select_courses_perc_feedback.csv
 ./select_courses_perc_feedback.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/cti/select_courses_perc_feedback.csv
 ./select_courses_perc_feedback.py "$top"/mapping/num_feedbacks/raw.csv > "$top"/analysis/is/select_courses_perc_feedback.csv
