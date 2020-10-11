@@ -46,3 +46,22 @@ create_substructure "$top"/sep-processed-xls/cti
 create_substructure "$top"/sep-processed-xls/is
 mkdir "$top"/sep-processed-xls/cti/average
 mkdir "$top"/sep-processed-xls/is/average
+
+mkdir "$top"/user
+mkdir "$top"/user/json
+
+mkdir "$top"/summary
+mkdir "$top"/summary/cti
+mkdir "$top"/summary/is
+
+mkdir "$top"/mapping/
+mkdir "$top"/mapping/num_feedbacks
+mkdir "$top"/mapping/cti
+mkdir "$top"/mapping/cti/num_feedbacks
+mkdir "$top"/mapping/num_users
+mkdir "$top"/mapping/is
+mkdir "$top"/mapping/is/num_feedbacks
+
+mkdir "$top"/analysis
+mkdir "$top"/analysis/cti
+mkdir "$top"/analysis/is
