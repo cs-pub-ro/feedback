@@ -19,8 +19,8 @@ fi
 ./extract_average "$top"/processed/raw/ > "$top"/summary/raw.csv
 sed -n '/^"Titulari Curs"/,/^"Total:"/p' "$top"/processed/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/prof.csv
 sed -n '/^"Asisten/,/^"Total:"/p' "$top"/processed/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/asist.csv
-for i in ../../2019-2020-test/processed/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Titulari Curs"/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/prof_courses.csv
-for i in ../../2019-2020-test/processed/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Asisten/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/asist_courses.csv
+for i in "$top"/processed/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Titulari Curs"/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/prof_courses.csv
+for i in "$top"/processed/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Asisten/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/asist_courses.csv
 
 ./extract_average "$top"/sep-processed/cti/entire/ > "$top"/summary/cti/entire.csv
 ./extract_average "$top"/sep-processed/cti/per-semester/ > "$top"/summary/cti/per-semester.csv
@@ -29,8 +29,8 @@ for i in ../../2019-2020-test/processed/raw/*.csv; do c="$(basename "$i" .csv)";
 ./extract_average "$top"/sep-processed/cti/raw/ > "$top"/summary/cti/raw.csv
 sed -n '/^"Titulari Curs"/,/^"Total:"/p' "$top"/sep-processed/cti/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/cti/prof.csv
 sed -n '/^"Asisten/,/^"Total:"/p' "$top"/sep-processed/cti/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/cti/asist.csv
-for i in ../../2019-2020-test/sep-processed/cti/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Titulari Curs"/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/cti/prof_courses.csv
-for i in ../../2019-2020-test/sep-processed/cti/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Asisten/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/cti/asist_courses.csv
+for i in "$top"/sep-processed/cti/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Titulari Curs"/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/cti/prof_courses.csv
+for i in "$top"/sep-processed/cti/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Asisten/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/cti/asist_courses.csv
 
 ./extract_average "$top"/sep-processed/is/entire/ > "$top"/summary/is/entire.csv
 ./extract_average "$top"/sep-processed/is/per-semester/ > "$top"/summary/is/per-semester.csv
@@ -39,5 +39,5 @@ for i in ../../2019-2020-test/sep-processed/cti/raw/*.csv; do c="$(basename "$i"
 ./extract_average "$top"/sep-processed/is/raw/ > "$top"/summary/is/raw.csv
 sed -n '/^"Titulari Curs"/,/^"Total:"/p' "$top"/sep-processed/is/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/is/prof.csv
 sed -n '/^"Asisten/,/^"Total:"/p' "$top"/sep-processed/is/entire/all.csv | tail -n +2 | head -n -1 > "$top"/summary/is/asist.csv
-for i in ../../2019-2020-test/sep-processed/is/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Titulari Curs"/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/is/prof_courses.csv
-for i in ../../2019-2020-test/sep-processed/is/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Asisten/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/is/asist_courses.csv
+for i in "$top"/sep-processed/is/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Titulari Curs"/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/is/prof_courses.csv
+for i in "$top"/sep-processed/is/raw/*.csv; do c="$(basename "$i" .csv)"; cat "$i" | sed -n '/^"Asisten/,/^"Total:"/p' | tail -n +2 | head -n -1 | sed 's/^/"'"$c"'",/'; done > "$top"/summary/is/asist_courses.csv
