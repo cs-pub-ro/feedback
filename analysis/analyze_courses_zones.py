@@ -8,6 +8,7 @@ import re
 
 
 PERC_LIMIT = 10
+NUM_LIMIT = 3
 
 
 def stats(courses):
@@ -68,7 +69,7 @@ def main():
     # Skip header.
     h = next(reader)
     for row in reader:
-        if float(row[2]) < PERC_LIMIT:
+        if float(row[2]) < PERC_LIMIT or int(row[1]) < NUM_LIMIT:
             continue
         courses[row[0]] = {
                 "name": row[0],

@@ -4,6 +4,7 @@ import sys
 import csv
 
 PERC_LIMIT = 10
+NUM_LIMIT = 3
 
 def main():
     if len(sys.argv) != 2:
@@ -24,7 +25,7 @@ def main():
 
     print("\"curs\",\"num_feedback\",\"proc_feedback\"")
     for k in sorted(courses, key=lambda x: courses[x]["perc"], reverse=True):
-        if courses[k]["perc"] < PERC_LIMIT:
+        if courses[k]["perc"] < PERC_LIMIT or courses[k]["nfeedback"] < NUM_LIMIT:
             continue
         print("\"{}\",\"{:d}\",\"{:4.2f}\"".format(k, courses[k]["nfeedback"], courses[k]["perc"], courses[k]["users"], courses[k]["course_grade"]))
 
