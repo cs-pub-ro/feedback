@@ -44,7 +44,7 @@ def main():
                 "name": row[0],
                 "prof": row[1],
                 "nfeedback": int(row[2]),
-                "perc": float(row[4]),
+                "perc": float(row[3]),
                 "users": int(row[4]),
                 "course_grade": float(row[5]),
                 }
